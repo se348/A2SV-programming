@@ -1,0 +1,19 @@
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        ans =0
+        count= 0
+        for i in range(len(num1)-1,-1,-1):
+            prev= 0
+            res = []
+            for j in range(len(num2)-1,-1,-1):
+                curr=int(num2[j]) *int(num1[i]) +prev
+                res.append(str(curr%10))
+                prev = curr//10
+            if prev!=0:
+                res.append(str(prev))
+            res.reverse()
+            for k in range(count):
+                res.append("0")
+            ans+= int("".join(res))
+            count+=1
+        return str(ans)
