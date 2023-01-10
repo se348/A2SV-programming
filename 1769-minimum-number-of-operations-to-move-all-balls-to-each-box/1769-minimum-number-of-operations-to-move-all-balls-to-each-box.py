@@ -1,20 +1,35 @@
 class Solution:
     def minOperations(self, boxes: str) -> List[int]:
         
-        onesIndex = []
+        leftTraversal = [0 for _ in range(len(boxes))]
+        rightTraversal =[0 for _ in range(len(boxes))]
+        quantity = 0
         
-        for idx in range(len(boxes)):
+        for idx, num in enumerate(boxes):
             
-            if boxes[idx] == "1":
-                onesIndex.append(idx)
+            if idx == 0:
+                quantity += int(num)
+                continue
+            
+            leftTraversal[idx] = leftTraversal[idx -1] + quantity
+            quantity += int(num)
+            
+        quantity = 0
+        
+        for idx in range(len(boxes)-1,-1,-1):
+            num = boxes[idx]
+            
+            if idx == len(boxes) - 1:
                 
-        operations = []
+                quantity += int(num)
+                continue
+            
+            rightTraversal[idx] = rightTraversal[idx +1] + quantity
+            quantity += int(num)
+
+        res = []
         
-        for idx in range(len(boxes)):
-            min_op = 0
-            for one in onesIndex:
-                min_op += abs(one -idx)
+        for idx in range(len(rightTraversal)):
+            res.append(rightTraversal[idx] + leftTraversal[idx])
             
-            operations.append(min_op)
-            
-        return operations
+        return res
