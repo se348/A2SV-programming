@@ -1,22 +1,22 @@
 class Solution:
     def sortPeople(self, names: List[str], heights: List[int]) -> List[str]:
         
-        
-        limit = len(heights) - 1
-        
-        
-        
-        while limit >= 0:
+        for start in range(len(names)):
             
-            for i in range( limit ):
+            min_idx = start
+            min_val = heights[start]
+            
+            for i in range(start, len(heights)):
+                    
+                if heights[i] > min_val:
+                    
+                    min_idx = i
+                    min_val = heights[i]
+                    
                 
-                    
-                if heights[i] < heights[i + 1]:
-                    
-                    heights[i], heights[ i + 1] =  heights[ i + 1], heights[i]
-                    names[i], names[ i + 1 ] = names[i + 1], names[i]
-                    
-            limit -= 1
+            heights[start], heights[min_idx] = heights[min_idx], heights[start]
+            names[start], names[min_idx] = names[min_idx], names[start]
+            
                 
         return names
                     
