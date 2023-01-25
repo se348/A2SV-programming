@@ -1,33 +1,57 @@
 class Solution:
-    def recurrsion(self, top, left, right, bottom, order, matrix):   
-
-            if bottom<top or right<left:
-                return
-
-            curr_left = left
-            while curr_left <= right:
-                order.append(matrix[top][curr_left])
-                curr_left +=1
-            
-            curr_top = top + 1
-            while curr_left != left and curr_top <= bottom:
-                order.append(matrix[curr_top][right])
-                curr_top +=1
-            
-            curr_right = right -1
-            while curr_top != (top +1) and curr_right >= left:
-                order.append(matrix[bottom][curr_right])
-                curr_right -= 1
-                
-            curr_bottom = bottom -1
-            while curr_right != (right - 1) and curr_bottom > top:
-                order.append(matrix[curr_bottom][left])
-                curr_bottom -= 1
-                
-            self.recurrsion(top+1, left+1, right-1, bottom-1, order, matrix)
-            
+    
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        order = []
-        self.recurrsion(0, 0, len(matrix[0])-1,len(matrix)-1, order, matrix)
-        return order
         
+        curr_dx, curr_dy = 0, 1 # to the right
+        curr_row, curr_col = 0, 0
+        ans = []
+        n, m = len(matrix), len(matrix[0])
+        seen = set()
+        inbound = lambda x, y : 0 <= x < n and 0 <= y < m
+        
+        while len(ans) < n * m:
+            if (curr_row, curr_col) not in seen:
+                ans.append(matrix[curr_row][curr_col])
+            seen.add((curr_row, curr_col))
+            
+            if not inbound(curr_row + curr_dx, curr_col + curr_dy) or\
+                (curr_row + curr_dx, curr_col + curr_dy) in seen:
+                curr_dx, curr_dy = curr_dy, -1 * curr_dx
+            else:
+                curr_row, curr_col = curr_row + curr_dx, curr_col + curr_dy
+        return ans
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        # direct =[1, 0]
+        # curr =[0,0]
+        
+#         res = []
+        
+#         while True:
+#             new_curr = curr + direct
+#             new_dirr = [curr + direct[1], curr + (-1 * direct[0])]
+            
+            
+#             if (new_curr[0] < len(matrix) and new_curr[1] < len(matrix[0])) and matrix[new_curr[0]][new_curr[1]] != -101:
+#                 curr = new_curr
+#                 continue
+                
+#             elif new_dirr[0] < len(matrix) and new_dirr[1] < len(matrix[0]) and matrix[new_dirr[0]][new_dirr[1]] != -101:
+#                 curr = new_dirr
+#                 direct = []
+                
+#             else:
+#                 break
+                
+                
