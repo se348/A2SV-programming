@@ -1,18 +1,16 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
+        left = 0
+        prev = -101
         
-        numsset = set()
-        rightptr =0
-        
-        for leftptr in range(len(nums)):
-        
-            while rightptr < len(nums) and nums[rightptr] in numsset:
-                
-                rightptr += 1
+        for right in range(len(nums)):
             
-            if rightptr < len(nums):
-                numsset.add(nums[rightptr])
-                nums[leftptr] = nums[rightptr]
-                
-            if rightptr == len(nums):
-                return leftptr
+            if nums[right] == prev:
+                continue
+
+            prev = nums[right]
+            nums[right] , nums[left] = nums[left], nums[right]
+            left += 1
+        
+        
+        return left
