@@ -10,7 +10,7 @@ class Solution:
             diction[s[fast_ptr]] += 1
             replacements = fast_ptr - slow_ptr +1 - max(diction.values())
         
-            while slow_ptr<=fast_ptr and fast_ptr - slow_ptr +1 - max(diction.values()) > k:
+            while fast_ptr - slow_ptr +1 - max(diction.values()) > k:
 
                 diction[s[slow_ptr]] -= 1
                 slow_ptr += 1
