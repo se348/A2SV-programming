@@ -1,19 +1,17 @@
 class Solution:
     def subarraysDivByK(self, nums: List[int], k: int) -> int:
+        hashed = defaultdict(int)
+        hashed[0] = 1
+        running_sum = 0
         
-        remainder =[0] * k
-        remainder[0] = 1
-        
-        curr = 0
-        res = 0
+        count = 0
         
         for num in nums:
-            curr += num
-            curr %= k
-            if curr <0:
-                curr +=k
-            res += remainder[curr]
-            remainder[curr] += 1
+            running_sum = (running_sum + num) % k
+            
+            count += hashed[running_sum]
+            
+            hashed[running_sum] += 1
         
-        return res
+        return count
         
