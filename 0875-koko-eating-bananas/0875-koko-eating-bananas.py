@@ -15,16 +15,13 @@ class Solution:
             mid =(left + right) //  2
             temp = self.evaluateSoln(piles, mid)
             
-            if temp == h:
+            if temp <= h:
                 res = mid
                 right =mid -1
             
-            elif temp > h:
+            else:
                 left =mid +1
             
-            else:
-                res= mid
-                right =mid -1
                 
         return res
             
