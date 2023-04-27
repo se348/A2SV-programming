@@ -1,4 +1,3 @@
-from itertools import accumulate
 class Solution:
     def minGroups(self, intervals: List[List[int]]) -> int:
         max_num = 0
