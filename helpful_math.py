@@ -1,0 +1,6 @@
+s = input()
+arr = s.split("+")
+new_arr = list(map(int, arr))
+new_arr.sort()
+new_arr =list(map(str, new_arr))
+print("+".join(new_arr))
