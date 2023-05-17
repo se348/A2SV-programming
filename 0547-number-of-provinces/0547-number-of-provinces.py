@@ -5,10 +5,10 @@ class Solution:
         visited = set()
         
         def dfs(curr):
+            visited.add(curr)
             
             for i in adjacencyList[curr]:
                 if i not in visited:
-                    visited.add(i)
                     dfs(i)
                     
         for i in range(len(isConnected)):
@@ -18,11 +18,8 @@ class Solution:
                     adjacencyList[i].append(j)
                     adjacencyList[j].append(i)
                     
-        visited.add(0)
-        dfs(0)
-        count = 1
-        
-        for i in range(1, len(isConnected)):
+        count = 0
+        for i in range(len(isConnected)):
             if i not in visited:
                 count += 1
                 dfs(i)
