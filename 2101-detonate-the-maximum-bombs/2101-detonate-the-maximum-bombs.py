@@ -1,42 +1,35 @@
 class Solution:
-    
-    def constructGraph(self, nums):
-        graph = defaultdict(list)
-        
-        for i in range(len(nums)):
-            for j in range(i+1, len(nums)):
+    def constructGraph(self, bombs):
+        damage_list = [[] for i in range(len(bombs))]
+        for i in range(len(bombs)):
+            for j in range(i+1, len(bombs)):
+                x_diff = bombs[j][1] - bombs[i][1]
+                y_diff = bombs[j][0] - bombs[i][0]
                 
-                euclid = math.sqrt((nums[i][1] - nums[j][1])**2 + (nums[i][0] - nums[j][0]) ** 2)
+                hypoth = ((x_diff ** 2) + (y_diff ** 2)) ** 0.5
                 
-                if euclid <=  nums[i][2]:
-                    graph[i].append(j)
-                    
-                if euclid <= nums[j][2]:
-                    graph[j].append(i)
-                    
-        return graph
-    
-    def maximumDetonation(self, nums: List[List[int]]) -> int:
+                if hypoth <= bombs[i][2]:
+                    damage_list[i].append(j)
+                
+                if hypoth <= bombs[j][2]:
+                    damage_list[j].append(i)
+        return damage_list
+                
+    def maximumDetonation(self, bombs: List[List[int]]) -> int:
+        adjacency_list = self.constructGraph(bombs)
+        visited = set()
         
-        graph = self.constructGraph(nums)
-        res = 1
-        for i in range(len(nums)):
+        def dfs(ind):
+            visited.add(ind)
             
-            curr = graph[i]
-            visited = {i}
-            q = collections.deque()
-            q.append(i)
-            count = 0
-            if curr:
-              
-                while q:
-                    
-                    curr = q.popleft()
-                    count+=1
-                    res =max(res, count)
-                    for j in graph[curr]:
-                        if j not in visited:
-                            visited.add(j)
-                            q.append(j)
+            for i in adjacency_list[ind]:
+                if i not in visited:
+                    dfs(i)
         
-        return res
+        count = 0
+        for i in range(len(bombs)):
+            visited = set()
+            dfs(i)
+            count =max(count, len(visited))
+            
+        return count
