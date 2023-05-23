@@ -4,8 +4,7 @@ class Solution:
         
         queue = deque()
         direction= [(0,1), (0, -1), (-1, 0), (1, 0)]
-        visited = set()
-        inbound = lambda x, y: 0<= x < len(grid) and 0<= y < len(grid[0]) and (x,y) not in visited and 1 <= grid[x][y] <= 2
+        inbound = lambda x, y: 0<= x < len(grid) and 0<= y < len(grid[0]) and 1 == grid[x][y]
         
         for i in range(len(grid)):
             for j in range(len(grid[0])):
@@ -13,7 +12,6 @@ class Solution:
                     count += 1
                 if grid[i][j] == 2:
                     queue.append((i,j, 0))
-                    visited.add((i,j))
         
         res= 0
         while queue:
@@ -27,7 +25,7 @@ class Solution:
                 neighbor_y = dir_y + curr_y
                 
                 if inbound(neighbor_x, neighbor_y):
-                    visited.add((neighbor_x, neighbor_y))
+                    grid[neighbor_x][neighbor_y] = 2
                     queue.append((neighbor_x, neighbor_y, mins + 1))
                     
         if count == 0:
