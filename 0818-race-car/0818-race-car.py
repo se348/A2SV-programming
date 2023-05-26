@@ -13,7 +13,7 @@ class Solution:
             next1_pos, next1_speed = curr_pos + curr_speed, curr_speed * 2
             next2_pos, next2_speed = curr_pos, - 1
             
-            if next1_pos >= -1000 and next1_pos <= 3 * target and (next1_pos , next1_speed) not in visited:
+            if next1_pos >= -1000 and next1_pos <= 2 * target and (next1_pos , next1_speed) not in visited:
                 visited.add((next1_pos, next1_speed))
                 queue.append((next1_pos, next1_speed, curr_level + 1))
                 
