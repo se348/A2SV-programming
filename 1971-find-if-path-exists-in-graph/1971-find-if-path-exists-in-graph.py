@@ -1,24 +1,31 @@
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
-        adjacencyList = defaultdict(list)
-        for v1, v2 in edges:
-            adjacencyList[v1].append(v2)
-            adjacencyList[v2].append(v1)
+        parent = [i for i in range(n)]
+        rank = [1 for i in range(n)]
         
-        if source == destination:
-            return True
-        
-        queue = deque()
-        visited = {source}
-        queue.append(source)
-        
-        while queue:
-            currNode = queue.popleft()
+        def find(node):
+            if parent[node] == node:
+                return node
             
-            for neighbor in adjacencyList[currNode]:
-                if neighbor not in visited:
-                    if neighbor == destination:
-                        return True
-                    queue.append(neighbor)
-                    visited.add(neighbor)
+            parent[node] = find(parent[node])
+            return parent[node]
+        
+        def union(node1, node2):
+            parent1 = find(node1)
+            parent2 = find(node2)
+            
+            if parent1 == parent2:
+                return
+            if rank[parent1] > rank[parent2]:
+                parent[parent2] = parent1
+                rank[parent1] += rank[parent2]
+            else:
+                parent[parent1] = parent2
+                rank[parent2] += rank[parent1]
+                
+        for node1,node2 in edges:
+            union(node1, node2)
+        
+        if find(source) == find(destination):
+            return True
         return False
