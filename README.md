@@ -8,7 +8,6 @@ This repository contains my solutions to problems from LeetCode and Codeforces. 
 - [Introduction](#introduction)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Introduction
@@ -42,9 +41,6 @@ Contributions are welcome! If you have a better solution to a problem, found a b
   ```
 5. Open a pull request to the main repository.
 
-## License
-
-This repository is licensed under the MIT License. Feel free to use the code and solutions for personal learning and educational purposes.
 
 ## Contact
 For any questions or feedback related to the repository or its content, you can reach me at semir2578@gmail.com. Happy coding!
