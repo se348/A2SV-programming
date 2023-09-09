@@ -1,10 +1,8 @@
 class Solution:
     def compareVersion(self, version1: str, version2: str) -> int:
         
-        ver1_splitted = version1.split(".")
-        ver2_splitted = version2.split(".")
-        len_ver1 = len(ver1_splitted)
-        len_ver2 = len(ver2_splitted)
+        ver1_splitted, ver2_splitted = version1.split("."), version2.split(".")
+        len_ver1, len_ver2 = len(ver1_splitted), len(ver2_splitted)
         min_length = min(len_ver1, len_ver2)
         
         for i in range(min_length):
