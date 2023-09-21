@@ -20,8 +20,6 @@ class Solution:
             else:
                 insert(nums2[j])
                 j += 1
-        print(min_heap1, min_heap2)
-
         if (n +m) & 1:
             return min_heap2[0]
         return (-min_heap1[0] + min_heap2[0]) / 2
