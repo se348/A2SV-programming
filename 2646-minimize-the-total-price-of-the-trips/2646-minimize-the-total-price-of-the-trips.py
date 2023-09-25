@@ -24,46 +24,27 @@ class Solution:
             contributions[n1] += 1
             dfs(-1, n1, n2)
         
-#         def dp(par, ind, halfed):
-            
-#             if (ind, halfed) in memo:
-#                 return memo[(ind, halfed)]
-            
-#             curr1, curr2 = 0, 0
-#             for neighbor in adjacency_list[ind]:
-#                 if neighbor != par:
-#                     if halfed:
-#                         curr1 += dp(ind, neighbor, False) 
-#                     else:
-#                         curr1 += dp(ind, neighbor, False)
-#                         curr2 += dp(ind, neighbor, True) 
-                        
-#             res = 0
-#             if halfed:
-#                 res = curr1 + (contributions[ind] * (price[ind] // 2))
-#             else:
-#                 res = min(curr1, curr2) + (contributions[ind] * price[ind])
-                
-            
-#             memo[(ind, halfed)] = res
-#             return res
-        
-#         res1 = dp(-1, 4, True)
-#         res2 = dp(-1, 4, False)
         @cache
-        def dp(node, parent, halve):
+        def dp(parent, ind, par_halfed):
+            if par_halfed:
+                count = 0
+                for neighbor in adjacency_list[ind]:
+                    if neighbor != parent:
+                        count += dp(ind, neighbor, False)
+                
+                count += (contributions[ind] * price[ind])
+                return count
+            else:
+                count1 = 0
+                count2 = 0
+                for neighbor in adjacency_list[ind]:
+                    if neighbor != parent:
+                        count1 += dp(ind, neighbor, False)
+                        count2 += dp(ind, neighbor, True)
 
-
-            res1 = inf
-            if not halve:
-                res1 = price[node] // 2 * contributions[node]
-                for nei in adjacency_list[node]:
-                    if nei != parent:
-                        res1 += dp(nei, node, not halve)
-
-            res2 = price[node] * contributions[node]
-            for nei in adjacency_list[node]:
-                if nei != parent:
-                    res2 += dp(nei, node, False)
-            return min(res1, res2)
-        return dp(0, -1, False )
+                count1 += (contributions[ind] * price[ind])
+                count2 += (contributions[ind] * price[ind] // 2)
+                return min(count1, count2)
+        
+        return dp(-1, 0, False)
+        
