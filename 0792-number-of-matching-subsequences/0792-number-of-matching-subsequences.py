@@ -9,7 +9,6 @@ class Trie:
         self.root = TrieNode()
     def findword(self,s, word) -> bool:
         current = self.root
-        count = 0
         idx = -1
         for i in range(len(word)):
             diff = ord(word[i]) - ord('a')
@@ -17,11 +16,9 @@ class Trie:
             if current.children[diff].valid_until == -1:
                 idx += 1
                 while idx < len(s) and s[idx] != word[i]:
-                    count += 1
                     idx += 1
                 if idx == len(s):
                     current.children[diff].valid_until = -10
-                    print(count)
                     return False
                 else:
                     current.children[diff].valid_until = idx
