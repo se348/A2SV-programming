@@ -1,10 +1,7 @@
 class Solution:
     def countOrders(self, n: int) -> int:
+        mod = (10 ** 9) + 7
+        count = factorial(2 * n)
+        res = count // pow(2, n )
+        return int(res % mod)
         
-        res = 1
-        mod = 10 ** 9 + 7
-        for i in range(1, n + 1):
-            multiple = 2 * i
-            res *= (multiple * (multiple - 1) / 2)
-            res %= mod
-        return int(res)
