@@ -3,20 +3,22 @@ class Solution:
         arrLen = min(arrLen, steps)
         
         
-        @cache
-        def dp(remaining_step, curr_ind):
-            if curr_ind < 0 or curr_ind >= (arrLen):
-                return 0
-            if remaining_step == 0 and curr_ind != 0:
-                return 0
-            if remaining_step == 0:
-                return 1
-            
-            a = dp(remaining_step - 1, curr_ind - 1)
-            b = dp(remaining_step - 1, curr_ind)
-            c = dp(remaining_step - 1, curr_ind + 1)
-            
-            return (a + b+ c) % ((10 ** 9) + 7)
+        curr = [0] * arrLen
         
-        return dp(steps, 0)
+        curr[0] = 1
         
+        
+        directions = [1, 0 , -1]
+        inbound = lambda a : 0 <= a< arrLen
+        
+        for i in range(1, steps + 1):
+            curr_copy = [0] * arrLen
+
+            for j in range(arrLen):
+                
+                for a in directions:
+                    if inbound(a + j):
+                        curr_copy[j] += curr[a + j]
+                        curr_copy[j] %= ((10 ** 9) + 7)
+            curr = curr_copy
+        return curr[0]
