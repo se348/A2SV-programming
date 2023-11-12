@@ -1,19 +1,25 @@
 class Solution:
-    def minOperations(self, nums: List[int], x: int) -> int:
-        tot, n = sum(nums), len((nums))
-        if tot == x:
-            return n
-        target = tot - x
-        left_ptr, res = 0, -1
-        
+    def minOperations(self, nums, x: int) -> int:
+        length = len(nums)
         curr_sum = 0
-        for right_ptr in range(n):
+        target = sum(nums) - x
+        left_ptr = 0
+        max_window = 0
+        if target == 0:
+            return length
+        for right_ptr in range(length):
             curr_sum += nums[right_ptr]
             
-            while curr_sum > target and left_ptr<right_ptr:
+            while left_ptr <= right_ptr and curr_sum > target:
                 curr_sum -= nums[left_ptr]
                 left_ptr += 1
-            if curr_sum == target:
-                res= max(res, right_ptr -left_ptr + 1)
+            
+            if curr_sum ==  target:
+                max_window = max(max_window, right_ptr - left_ptr + 1)
+        
+        if not max_window:
+            return -1
+        res = length - max_window
+        return res
                 
-        return n - res if res != -1 else -1
+            
