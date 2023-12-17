@@ -2,27 +2,31 @@ from sortedcontainers import SortedList
 class FoodRatings:
 
     def __init__(self, foods: List[str], cuisines: List[str], ratings: List[int]):
-        self.sorted_list = defaultdict(SortedList)      
-        self.food_to_cuisine = {}
-        self.food_to_rating = {}
+        self.cuisines = defaultdict(list) 
+        self.food_rating_map = {}
+        self.food_cuisine_map = {}
         
         for i in range(len(foods)):
-            self.sorted_list[cuisines[i]].add((-ratings[i], foods[i]))
-            self.food_to_cuisine[foods[i]] = cuisines[i]
-            self.food_to_rating[foods[i]] = ratings[i]
+            self.food_rating_map[foods[i]] = ratings[i]
+            self.food_cuisine_map[foods[i]] = cuisines[i]
             
-    def changeRating(self, food: str, newRating: int) -> None:
-        cuisine = self.food_to_cuisine[food]
-        rating = self.food_to_rating[food]
+            heappush(self.cuisines[cuisines[i]], (-ratings[i], foods[i]))
+            
         
-        self.sorted_list[cuisine].remove((-rating, food))
-        self.sorted_list[cuisine].add((-newRating, food))
-        self.food_to_rating[food] = newRating
+        
+    def changeRating(self, food: str, newRating: int) -> None:
+        self.food_rating_map[food] = newRating
+        cuisine = self.food_cuisine_map[food]
+        
+        heappush(self.cuisines[cuisine], (-newRating, food))
+        
         
     def highestRated(self, cuisine: str) -> str:
-        prev_rating, food =self.sorted_list[cuisine][0]
-        return food
-
+        the_heap = self.cuisines[cuisine]
+        while self.food_rating_map[the_heap[0][1]] != -the_heap[0][0]:
+            heappop(the_heap)
+        
+        return the_heap[0][1]
 
 # Your FoodRatings object will be instantiated and called as such:
 # obj = FoodRatings(foods, cuisines, ratings)
