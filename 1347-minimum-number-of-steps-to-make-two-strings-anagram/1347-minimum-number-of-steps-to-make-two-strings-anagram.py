@@ -5,7 +5,6 @@ class Solution:
         s_counter = Counter(s)
         
         a = 0
-        b = 0
         
         for i in range(26):
             key = chr(ord('a') + i)
@@ -13,8 +12,6 @@ class Solution:
             
             if temp > 0:
                 a += temp
-            else:
-                b += temp
         
         return a
             
