@@ -5,36 +5,25 @@
 #         self.next = next
 class Solution:
     def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        curr = head
         
-        number = 0
         
-        while curr:
-            number *= 10
-            number += curr.val
-            curr =curr.next
+        def recursion(curr_node):
+            if not curr_node:
+                return 0
             
-        number *= 2
+            nexxt = recursion(curr_node.next)
+            curr_sum = nexxt + (curr_node.val * 2)
+            curr_node.val = (curr_sum  % 10)
+            
+            return (curr_sum // 10)
         
-        multiples = 1
-        curr_num = number
         
-        while curr_num >= 10:
-            curr_num //= 10
-            multiples *= 10
+        remainder = recursion(head)
         
-        curr = head
-        tail = None
         
-        while curr:
-            n = (number // multiples)
-            curr.val = n            
-            number %= multiples
-            multiples //= 10
-            tail = curr
-            curr = curr.next
+        if remainder:
+            nxt = ListNode(remainder)
+            nxt.next = head
+            return nxt        
         
-        if multiples:
-            tail.next = ListNode(number)
-        
-        return head
+        return head 
