@@ -13,6 +13,7 @@ class Solution:
                 
                 if low <= curr_num <= high:
                     arr.append(curr_num)
-        
+                elif curr_num >= high:
+                    break
         arr.sort()
         return arr
