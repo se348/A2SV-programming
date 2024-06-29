@@ -18,8 +18,6 @@ class Trie:
     def is_not_included(self, word):
         curr = self.root
         for ch in word:
-            if ch not in curr.children:
-                return True
             curr = curr.children[ch]
         return len(curr.children) == 0
     
